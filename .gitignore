@@ -1,8 +1,9 @@
 node_modules
 coverage
+dist
 .vscode
 .env
-/coverage
+
 
 # debug
 npm-debug.log*
