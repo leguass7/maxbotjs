@@ -22,13 +22,10 @@ export function isObject(value) {
 
 function mapObject(obj) {
   const ret = {}
+  // eslint-disable-next-line array-callback-return
   Object.keys(obj).map(key => {
     const k = decamelcaseStr(key)
-    if (isObject(obj[key])) {
-      ret[k] = mapObject(obj[key])
-    } else {
-      ret[k] = obj[key]
-    }
+    ret[k] = isObject(obj[key]) ? mapObject(obj[key]) : obj[key]
   })
   return ret
 }
