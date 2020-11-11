@@ -4,6 +4,8 @@
   "description": "Library for connect to MAXBOT",
   "main": "./dist/index.js",
   "types": "./dist/src",
+  "author": "Leandro Sbrissa <leandro.sbrissa@hotmail.com>",
+  "license": "MIT",
   "files": [
     "dist/",
     "LICENSE",
@@ -31,8 +33,6 @@
   "engines": {
     "node": ">=10"
   },
-  "author": "Leandro Sbrissa <leandro.sbrissa@hotmail.com>",
-  "license": "MIT",
   "peerDependencies": {
     "axios": "^0.21.0",
     "camelcase-keys": "^6.2.2",
