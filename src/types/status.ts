@@ -2,7 +2,7 @@ import { ApiResult } from './types'
 type LastOperation = string
 type Status = 'Active' | 'Disabled'
 
-interface StatusData {
+interface IStatusData {
   /** date format YYYY-MM-DD */
   createdAt: string
   status: Status
@@ -11,5 +11,5 @@ interface StatusData {
   lastOperation: LastOperation
 }
 export interface IGetStatusResult extends ApiResult {
-  data?: StatusData[]
+  data?: IStatusData[]
 }

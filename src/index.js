@@ -3,19 +3,22 @@
  * @typedef {import('./types/types').ApiResult} ApiResult
  * @typedef {import('./types/types').PostType} PostType
  * @typedef {import('./types/types').IRequestPayload} IRequestPayload
- *
  * @typedef {import('./types/status').IGetStatusResult} IGetStatusResult
+ * @typedef {import('./types/status').IStatusData} IStatusData
  * @typedef {import('./types/contact').IContactFilter} IContactFilter
  * @typedef {import('./types/contact').IContactData} IContactData
- *
  * @typedef {import('./types/contact').IGetContactResult} IGetContactResult
  * @typedef {import('./types/protocol').IProtFilter} IProtFilter
  * @typedef {import('./types/protocol').IGetProtResult} IGetProtResult
  *
- *
  * @exports MaxbotOptions
+ * @exports ApiResult
+ * @exports PostType
+ * @exports IRequestPayload
  * @exports IGetStatusResult
+ * @exports IStatusData
  * @exports IContactFilter
+ * @exports IContactData
  * @exports IGetContactResult
  * @exports IProtFilter
  * @exports IGetProtResult
@@ -138,44 +141,44 @@ class Maxbot {
   /**
    * Envia uma mensagem de texto para um contato existente
    * @method sendText
-   * @param {String|IContactFilter} find
+   * @param {String|IContactFilter} forWho
    * @param {String} text
    * @returns {Promise<ApiResult>}
    */
-  async sendText(find, text) {}
+  async sendText(forWho, text) {}
 
   /**
    * Envia uma imagem para um contato existente
    * @method sendImage
-   * @param {String|IContactFilter} find
+   * @param {String|IContactFilter} forWho
    * @param {String} urlImage
    * @returns {Promise<ApiResult>}
    */
-  async sendImage(find, urlImage) {}
+  async sendImage(forWho, urlImage) {}
 
   /**
    * Envia um arquivo para um contato existente
    * @method sendFile
-   * @param {String|IContactFilter} find
+   * @param {String|IContactFilter} forWho
    * @param {String} urlFile
    * @returns {Promise<ApiResult>}
    */
-  async sendFile(find, urlFile) {}
+  async sendFile(forWho, urlFile) {}
 
   /**
    * Envia um audio para um contato existente
    * @method sendSound
-   * @param {String|IContactFilter} find
+   * @param {String|IContactFilter} forWho
    * @param {String} urlSound
    * @returns {Promise<ApiResult>}
    */
-  async sendSound(find, urlSound) {}
+  async sendSound(forWho, urlSound) {}
 
   /**
    * @private
    * @method requestApi
    * @param {PostType} type
-   * @param {RequestPayload} payload
+   * @param {IRequestPayload} payload
    * @returns {Promise<ApiResult>}
    */
   async requestApi(type, payload = {}) {
