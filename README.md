@@ -1,3 +1,4 @@
+![standard-image](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)
 # maxbotjs
  > Biblioteca (não oficial) **nodejs** de integração com [MAXBOT](https://maxbot.com.br)
  Por favor, visite o site oficial para entender como funciona.
@@ -33,3 +34,14 @@ import Maxbot from 'maxbotjs'
 const maxbot = new Maxbot()
 maxbot.setMe('token', 'SEU_TOKEN_AQUI')
 ```
+## Contribuição
+Métodos para serem implementados na classe ```Maxbot```
+- [x] getStatus()
+- [ ] getContact()
+- [ ] getProt()
+- [ ] putContact()
+- [ ] setContact()
+- [ ] sendText()
+- [ ] sendImage()
+- [ ] sendFile()
+- [ ] sendSound()
