@@ -14,7 +14,11 @@ function makeExternalPredicate(externalArr) {
 
 function getExternal() {
   const external = Object.keys(pkg.peerDependencies || {})
-  const allExternal = [...external, ...Object.keys(pkg.dependencies || {})]
+  const allExternal = [
+    /// ...
+    ...external,
+    ...Object.keys(pkg.dependencies || {})
+  ]
   return makeExternalPredicate(allExternal)
 }
 
@@ -33,12 +37,6 @@ module.exports = [
     },
     plugins: [
       resolve(),
-      // sucrase({
-      //   srcDir: 'packages',
-      //   exclude: ['node_modules/**', '__tests__/**'],
-      //   transforms: ['imports'],
-      // }),
-
       typescript({
         tsconfigOverride: {
           compilerOptions: {
@@ -47,9 +45,9 @@ module.exports = [
             // declarationMap: true,
           },
           include: ['src'],
-          exclude: ['node_modules', 'dist', 'rollup.config.js']
+          exclude: ['node_modules', 'dist', 'rollup.config.js', 'src/__tests__']
         },
-        // verbosity: 2,
+
         rollupCommonJSResolveHack: true,
         // objectHashIgnoreUnknownHack: true,
         clean: true
@@ -66,7 +64,7 @@ module.exports = [
         // ecma: '2015',
         output: {
           // comments: 'all',
-          beautify: true
+          beautify: false
         }
       })
     ]

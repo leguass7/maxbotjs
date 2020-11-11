@@ -1,6 +1,9 @@
 /**
  * @typedef {import('./types/types').MaxbotOptions} MaxbotOptions
  * @typedef {import('./types/types').ApiResult} ApiResult
+ * @typedef {import('./types/types').PostType} PostType
+ * @typedef {import('./types/types').IRequestPayload} IRequestPayload
+ *
  * @typedef {import('./types/status').IGetStatusResult} IGetStatusResult
  * @typedef {import('./types/contact').IContactFilter} IContactFilter
  * @typedef {import('./types/contact').IContactData} IContactData
@@ -9,6 +12,7 @@
  * @typedef {import('./types/protocol').IProtFilter} IProtFilter
  * @typedef {import('./types/protocol').IGetProtResult} IGetProtResult
  *
+ *
  * @exports MaxbotOptions
  * @exports IGetStatusResult
  * @exports IContactFilter
@@ -16,12 +20,36 @@
  * @exports IProtFilter
  * @exports IGetProtResult
  */
+import Api from './Api'
+
+const postType = {
+  GETSTATUS: 'get_status',
+  GETCONTACT: 'get_contact',
+  GETPROT: 'get_prot',
+  PUTCONTACT: 'put_contact',
+  SETCONTACT: 'set_contact',
+  SENDTEXT: 'send_text',
+  SENDIMAGE: 'send_image',
+  SENDFILE: 'send_file',
+  SENDSOUND: 'send_sound'
+}
+
+const baseURL = 'https://mbr.maxbot.com.br/api/v1.php'
+// const baseURL = 'http://localhost1:3003/test/hookhttp1'
 
 /**
  * @class
- * Class Maxbot
+ * Class Maxbot methods:
  * - setMe
  * - getMe
+ * - getStatus
+ * - getProt
+ * - putContact
+ * - setContact
+ * - sendText
+ * - sendImage
+ * - sendFile
+ * - sendSound
  */
 class Maxbot {
   /**
@@ -30,8 +58,9 @@ class Maxbot {
    */
   constructor(params) {
     /** @type {MaxbotOptions} */
-    this.config = { token: '' }
-    if (params) this.setMe(params)
+    this.config = { token: '', timeout: 3000, baseURL }
+
+    this.setMe(params)
     return this
   }
 
@@ -67,50 +96,105 @@ class Maxbot {
   /**
    * Verificar a situação atual da API Maxbot
    * @method getStatus
-   * @returns {IGetStatusResult}
+   * @returns {Promise<IGetStatusResult>}
    */
-  getStatus() {}
+  async getStatus() {
+    const res = await this.requestApi(postType.GETSTATUS)
+    return res
+  }
 
   /**
    * Importar a ficha de cadastro do contato
    * @method getContact
    * @param {IContactFilter} filter
-   * @returns {IGetContactResult}
+   * @returns {Promise<IGetContactResult>}
    */
-  getContact(filter) {}
+  async getContact(filter) {}
 
   /**
    * Importar os protocolos concluídos em um determinado período
    * @method getProt
    * @param {IProtFilter} filter
-   * @returns {IGetProtResult}
+   * @returns {Promise<IGetProtResult>}
    */
-  getProt(filter) {}
+  async getProt(filter) {}
 
   /**
    * Criar um novo contato no Maxbot
    * @method putContact
    * @param {IContactData} contactData
-   * @returns {ApiResult}
+   * @returns {Promise<ApiResult>}
    */
-  putContact(contactData) {}
+  async putContact(contactData) {}
 
   /**
    * Atualizar dados de um contato existente
    * @method setContact
    * @param {IContactData} contactData
-   * @returns {ApiResult}
+   * @returns {Promise<ApiResult>}
    */
-  setContact(contactData) {}
+  async setContact(contactData) {}
 
   /**
-   * Atualizar dados de um contato existente
+   * Envia uma mensagem de texto para um contato existente
    * @method sendText
-   * @param {String} find
+   * @param {String|IContactFilter} find
    * @param {String} text
-   * @returns {ApiResult}
+   * @returns {Promise<ApiResult>}
    */
-  sendText(find, text) {}
+  async sendText(find, text) {}
+
+  /**
+   * Envia uma imagem para um contato existente
+   * @method sendImage
+   * @param {String|IContactFilter} find
+   * @param {String} urlImage
+   * @returns {Promise<ApiResult>}
+   */
+  async sendImage(find, urlImage) {}
+
+  /**
+   * Envia um arquivo para um contato existente
+   * @method sendFile
+   * @param {String|IContactFilter} find
+   * @param {String} urlFile
+   * @returns {Promise<ApiResult>}
+   */
+  async sendFile(find, urlFile) {}
+
+  /**
+   * Envia um audio para um contato existente
+   * @method sendSound
+   * @param {String|IContactFilter} find
+   * @param {String} urlSound
+   * @returns {Promise<ApiResult>}
+   */
+  async sendSound(find, urlSound) {}
+
+  /**
+   * @private
+   * @method requestApi
+   * @param {PostType} type
+   * @param {RequestPayload} payload
+   * @returns {Promise<ApiResult>}
+   */
+  async requestApi(type, payload = {}) {
+    const self = this
+    const result = await Api.post(
+      null,
+      {
+        cmd: type,
+        token: self.config.token,
+        testeCamelcase: true,
+        ...payload
+      },
+      {
+        timeout: self.config.timeout,
+        baseURL: self.config.baseURL
+      }
+    )
+    return result
+  }
 }
 
 export default Maxbot

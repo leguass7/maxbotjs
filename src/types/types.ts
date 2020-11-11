@@ -1,5 +1,7 @@
 export interface MaxbotOptions {
   token: string
+  timeout: number
+  baseURL?: string
 }
 
 export interface ApiResult {
@@ -13,4 +15,20 @@ export interface FilterByDate {
   dateStart?: string
   /** YYYY-MM-DD */
   dateStop?: string
+}
+
+export type PostType =
+  | 'get_status'
+  | 'get_contact'
+  | 'get_prot'
+  | 'put_contact'
+  | 'set_contact'
+  | 'send_text'
+  | 'send_image'
+  | 'send_file'
+  | 'send_sound'
+
+export interface IRequestPayload {
+  cmd?: PostType
+  token?: string
 }

@@ -11,5 +11,5 @@ interface StatusData {
   lastOperation: LastOperation
 }
 export interface IGetStatusResult extends ApiResult {
-  data: StatusData[]
+  data?: StatusData[]
 }
