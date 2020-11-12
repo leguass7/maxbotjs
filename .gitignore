@@ -1,6 +1,5 @@
 node_modules
 coverage
-dist
 .vscode
 .env
 
@@ -11,3 +10,6 @@ yarn-debug.log*
 yarn-error.log*
 
 /package-lock.json
+
+#temp dist
+#dist
