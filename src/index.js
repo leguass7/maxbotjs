@@ -62,9 +62,26 @@ class Maxbot {
   constructor(params) {
     /** @type {MaxbotOptions} */
     this.config = { token: '', timeout: 3000, baseURL }
+    this.ready = false
 
     this.setMe(params)
     return this
+  }
+
+  /**
+   * Verifica se bot esta pronto
+   * @method isReady
+   * @param {Boolean} force force api request status
+   * @returns {Promise<Boolean>}
+   */
+  async isReady(force) {
+    if (!this.config.token) return false
+    const check = async () => {
+      const result = await this.getStatus()
+      return !!parseInt(result.status, 10)
+    }
+    if (force || !this.ready) this.ready = await check()
+    return !!this.ready
   }
 
   /**
@@ -112,7 +129,10 @@ class Maxbot {
    * @param {IContactFilter} filter
    * @returns {Promise<IGetContactResult>}
    */
-  async getContact(filter) {}
+  async getContact(filter) {
+    const res = await this.requestApi(postType.GETCONTACT, filter)
+    return res
+  }
 
   /**
    * Importar os protocolos concluídos em um determinado período
@@ -128,7 +148,11 @@ class Maxbot {
    * @param {IContactData} contactData
    * @returns {Promise<ApiResult>}
    */
-  async putContact(contactData) {}
+  async putContact(contactData) {
+    console.log('Maxbot putContact', contactData)
+    const res = await this.requestApi(postType.PUTCONTACT, contactData)
+    return res
+  }
 
   /**
    * Atualizar dados de um contato existente
@@ -136,7 +160,9 @@ class Maxbot {
    * @param {IContactData} contactData
    * @returns {Promise<ApiResult>}
    */
-  async setContact(contactData) {}
+  async setContact(contactData) {
+    console.log('Maxbot setContact', contactData)
+  }
 
   /**
    * Envia uma mensagem de texto para um contato existente
@@ -188,7 +214,6 @@ class Maxbot {
       {
         cmd: type,
         token: self.config.token,
-        testeCamelcase: true,
         ...payload
       },
       {
@@ -196,6 +221,7 @@ class Maxbot {
         baseURL: self.config.baseURL
       }
     )
+    console.log('requestApi', type, result)
     return result
   }
 }

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Library for connect to MAXBOT",
   "main": "./dist/index.js",
-  "types": "./dist/src",
+  "types": "./dist",
   "author": "Leandro Sbrissa <leandro.sbrissa@hotmail.com>",
   "license": "MIT",
   "files": [

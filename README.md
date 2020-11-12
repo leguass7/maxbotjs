@@ -21,27 +21,43 @@ Antes de começar você precisará se cadastrar na *plataforma oficial* e obter 
 
 ### Começando a usar
 
-```javascript
+```js
 import Maxbot from 'maxbotjs'
 
 const maxbot = new Maxbot({ token: 'SEU_TOKEN_AQUI' })
 ```
 ou
 
-```javascript
+```js
 import Maxbot from 'maxbotjs'
 
 const maxbot = new Maxbot()
 maxbot.setMe('token', 'SEU_TOKEN_AQUI')
 ```
+
+***
+
 ## Contribuição
-Métodos para serem implementados na classe ```Maxbot```
+Contribuições serão bem vindas.
+
+#### Métodos para serem implementados na classe ```Maxbot```
 - [x] getStatus()
-- [ ] getContact()
+- [x] getContact()
 - [ ] getProt()
-- [ ] putContact()
-- [ ] setContact()
+- [x] putContact()
+- [x] setContact()
 - [ ] sendText()
 - [ ] sendImage()
 - [ ] sendFile()
 - [ ] sendSound()
+
+#### Documentação
+- [ ] Documentos com melhor explicação que as encontradas no site oficial
+- [ ] documentação em inglês
+
+***
+
+## Observações importantes
+ - Existe alguns incômodos e pequenos bugs nas respostas da API [veja aqui](./docs/issues-maxbot.md), que ***não possuem relação com essa biblioteca*** , porém nada que afete o funcionamento dessa do ***maxbotjs***. vamos esperar pelas correções ;)
+
+ - Embora os testes estejam devidamente escritos, não podemos executá-los, porque ainda não tivemos acesso a um *token de testes* por parte da ***maxbot.com.br***.
