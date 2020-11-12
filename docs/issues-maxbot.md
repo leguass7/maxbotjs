@@ -22,7 +22,7 @@ A api deveria fazer uma busca utilizando pelo ao menos os 3 campos (whatsapp,mob
 
 ***
 ## set_contact
-Toda requisição para ***set_contact*** ou ***put_contact*** embora obtenhamos ***http status 200*** e uma resposta JSON como esperado:
+- Toda requisição para ***set_contact*** ou ***put_contact*** embora obtenhamos ***http status 200*** e uma resposta JSON como esperado:
 ```json
 {"status":1,"msg":"Success"}
 ```
@@ -30,5 +30,6 @@ Podemos observar o erro do PHP abaixo:
 > Warning: explode() expects parameter 2 to be string, array given in /home maxbotcom/public_html/mbr/api/v1/set_contact.php on line 499
 Warning: Invalid argument supplied for foreach() in /home/maxbotcom/public_html/mbr/api/v1/set_contact.php on line 502
 
+- No campo ***segmentation***, há uma divergência na documentação oficial, onde no exemplo JSON é um ***array***, mas no texto explicativo diz que deve ser uma ***string*** com as segmentações separadas com vírgula "(ex.: prospecto,apresentação,orçamento)"
 ### Comportamento esperado
 Apenas uma resposta à requisição sem erros

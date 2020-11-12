@@ -140,7 +140,10 @@ class Maxbot {
    * @param {IProtFilter} filter
    * @returns {Promise<IGetProtResult>}
    */
-  async getProt(filter) {}
+  async getProt(filter) {
+    const res = await this.requestApi(postType.GETPROT, filter)
+    return res
+  }
 
   /**
    * Criar um novo contato no Maxbot
@@ -149,7 +152,6 @@ class Maxbot {
    * @returns {Promise<ApiResult>}
    */
   async putContact(contactData) {
-    console.log('Maxbot putContact', contactData)
     const res = await this.requestApi(postType.PUTCONTACT, contactData)
     return res
   }
@@ -161,7 +163,8 @@ class Maxbot {
    * @returns {Promise<ApiResult>}
    */
   async setContact(contactData) {
-    console.log('Maxbot setContact', contactData)
+    const res = await this.requestApi(postType.SETCONTACT, contactData)
+    return res
   }
 
   /**
