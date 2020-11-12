@@ -14,25 +14,49 @@
 ### Pré requisitos
 Antes de começar você precisará se cadastrar na *plataforma oficial* e obter um **token** de acesso.
 
-# Getting Started
+# Começando a usar
 
 ## Instalação
-```yarn add maxbotjs``` ou ```npm install maxbotjs```
-
-### Começando a usar
+```bash
+yarn add maxbotjs
+```
+ou
+```bash
+npm install maxbotjs
+```
 
 ```js
+// index.js
 import Maxbot from 'maxbotjs'
 
-const maxbot = new Maxbot({ token: 'SEU_TOKEN_AQUI' })
+// create and config instance
+const maxbot = new Maxbot({
+  token: 'SEU_TOKEN_AQUI',
+  timeout: 1000, // optional: default 3000 (3 seconds)
+})
 ```
 ou
 
 ```js
+// index.js
 import Maxbot from 'maxbotjs'
 
+// instance
 const maxbot = new Maxbot()
+
+// config method
 maxbot.setMe('token', 'SEU_TOKEN_AQUI')
+```
+```js
+// example
+maxbot.getStatus().then(result => {
+  console.log(result)
+})
+
+// or
+
+const result = await maxbot.getStatus()
+console.log(result)
 ```
 
 ***
@@ -53,11 +77,11 @@ Contribuições serão bem vindas.
 
 #### Documentação
 - [ ] Documentos com melhor explicação que as encontradas no site oficial
-- [ ] documentação em inglês
+- [ ] Documentação em inglês
 
 ***
 
 ## Observações importantes
- - Existe alguns incômodos e pequenos bugs nas respostas da API [veja aqui](./docs/issues-maxbot.md), que ***não possuem relação com essa biblioteca*** , porém nada que afete o funcionamento dessa do ***maxbotjs***. vamos esperar pelas correções ;)
+ - Existe alguns incômodos e pequenos bugs nas respostas da API [veja aqui](./docs/issues-maxbot.md), que ***não possuem relação com essa biblioteca***, porém nada que afete o funcionamento dessa do ***maxbotjs***. vamos esperar pelas correções ;)
 
  - Embora os testes estejam devidamente escritos, não podemos executá-los, porque ainda não tivemos acesso a um *token de testes* por parte da ***maxbot.com.br***.
