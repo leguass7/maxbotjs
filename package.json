@@ -1,7 +1,7 @@
 {
   "name": "maxbotjs",
   "version": "0.1.1",
-  "description": "Library for connect to MAXBOT",
+  "description": "Library to connect MAXBOT",
   "main": "./dist/index.js",
   "types": "./dist",
   "author": "Leandro Sbrissa <leandro.sbrissa@hotmail.com>",
