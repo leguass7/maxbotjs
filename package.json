@@ -29,6 +29,9 @@
     "type": "git",
     "url": "https://github.com/leguass7/maxbotjs.git"
   },
+  "standard-version": {
+    "infile": "docs/CHANGELOG.md"
+  },
   "engines": {
     "node": ">=10"
   },

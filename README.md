@@ -1,4 +1,4 @@
-![standard-image](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)
+![standard-image](https://img.shields.io/badge/code%20style-standard-brightgreen.svg) [![NPM](https://img.shields.io/npm/v/maxbotjs.svg)](https://www.npmjs.com/package/maxbotjs)
 # maxbotjs
  > Biblioteca (não oficial) **nodejs** de integração com [MAXBOT](https://maxbot.com.br)
  Por favor, visite o site oficial para entender como funciona.
