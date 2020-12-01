@@ -1,7 +1,7 @@
 import { ApiResult } from './types';
 declare type LastOperation = string;
 declare type Status = 'Active' | 'Disabled';
-interface IStatusData {
+export interface IStatusData {
     /** date format YYYY-MM-DD */
     createdAt: string;
     status: Status;
