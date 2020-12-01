@@ -5,6 +5,7 @@ export type PostType = "get_status" | "get_contact" | "get_prot" | "put_contact"
 export type IRequestPayload = import("./types/types").IRequestPayload;
 export type IGetStatusResult = import("./types/status").IGetStatusResult;
 export type IStatusData = any;
+export type IGetSegmentationResult = import("./types/segmentation").IGetSegmentationResult;
 export type IContactFilter = import("./types/contact").IContactFilter;
 export type IContactData = import("./types/contact").IContactData;
 export type IGetContactResult = import("./types/contact").IGetContactResult;
@@ -16,6 +17,7 @@ export type IGetProtResult = import("./types/protocol").IGetProtResult;
  * - setMe
  * - getMe
  * - getStatus
+ * - getSegmentation
  * - getProt
  * - putContact
  * - setContact
@@ -60,6 +62,12 @@ declare class Maxbot {
      * @returns {Promise<IGetStatusResult>}
      */
     getStatus(): Promise<IGetStatusResult>;
+    /**
+     * Importar seguimentações do Maxbot
+     * @method getSegmentation
+     * @returns {Promise<IGetSegmentationResult>}
+     */
+    getSegmentation(): Promise<IGetSegmentationResult>;
     /**
      * Importar a ficha de cadastro do contato
      * @method getContact

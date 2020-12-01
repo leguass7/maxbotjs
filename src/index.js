@@ -5,6 +5,7 @@
  * @typedef {import('./types/types').IRequestPayload} IRequestPayload
  * @typedef {import('./types/status').IGetStatusResult} IGetStatusResult
  * @typedef {import('./types/status').IStatusData} IStatusData
+ * @typedef {import('./types/segmentation').IGetSegmentationResult} IGetSegmentationResult
  * @typedef {import('./types/contact').IContactFilter} IContactFilter
  * @typedef {import('./types/contact').IContactData} IContactData
  * @typedef {import('./types/contact').IGetContactResult} IGetContactResult
@@ -27,6 +28,7 @@ import Api from './Api'
 
 const postType = {
   GETSTATUS: 'get_status',
+  GETSEGMENTATION: 'get_segmentation',
   GETCONTACT: 'get_contact',
   GETPROT: 'get_prot',
   PUTCONTACT: 'put_contact',
@@ -46,6 +48,7 @@ const baseURL = 'https://mbr.maxbot.com.br/api/v1.php'
  * - setMe
  * - getMe
  * - getStatus
+ * - getSegmentation
  * - getProt
  * - putContact
  * - setContact
@@ -120,6 +123,16 @@ class Maxbot {
    */
   async getStatus() {
     const res = await this.requestApi(postType.GETSTATUS)
+    return res
+  }
+
+  /**
+   * Importar seguimentações do Maxbot
+   * @method getSegmentation
+   * @returns {Promise<IGetSegmentationResult>}
+   */
+  async getSegmentation() {
+    const res = await this.requestApi(postType.GETSEGMENTATION)
     return res
   }
 
