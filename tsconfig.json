@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "removeComments": false,
     "outDir": "./dist",
     "allowJs": true,
