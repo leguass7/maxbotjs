@@ -239,7 +239,7 @@ class Maxbot {
         baseURL: self.config.baseURL
       }
     )
-    console.log('requestApi', type, result)
+    // console.log('requestApi', type, result)
     return result
   }
 }

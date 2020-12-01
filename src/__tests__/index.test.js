@@ -54,10 +54,17 @@ describe('Test Class', () => {
   })
 
   describe('Test of Api requests', () => {
-    test('Should get status', async () => {
+    test('Should get_status', async () => {
       const expected = { status: 1, msg: 'Success' }
       const response = await maxbot.getStatus()
-      console.log('response TESTE', response)
+      // console.log('response get_status', response)
+      expect(response).toEqual(expect.objectContaining(expected))
+    })
+
+    test('Should get_segmentation', async () => {
+      const expected = { status: 1, msg: 'Success' }
+      const response = await maxbot.getSegmentation()
+      // console.log('response get_segmentation', response)
       expect(response).toEqual(expect.objectContaining(expected))
     })
 
