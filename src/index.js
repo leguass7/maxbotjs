@@ -5,6 +5,7 @@
  * @typedef {import('./types/types').IRequestPayload} IRequestPayload
  * @typedef {import('./types/status').IGetStatusResult} IGetStatusResult
  * @typedef {import('./types/status').IStatusData} IStatusData
+ * @typedef {import('./types/segmentation').ISegmentationData} ISegmentationData
  * @typedef {import('./types/segmentation').IGetSegmentationResult} IGetSegmentationResult
  * @typedef {import('./types/contact').IContactFilter} IContactFilter
  * @typedef {import('./types/contact').IContactData} IContactData
@@ -18,6 +19,7 @@
  * @exports IRequestPayload
  * @exports IGetStatusResult
  * @exports IStatusData
+ * @exports IGetSegmentationResult
  * @exports IContactFilter
  * @exports IContactData
  * @exports IGetContactResult

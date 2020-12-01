@@ -1,10 +1,11 @@
 export default Maxbot;
 export type MaxbotOptions = import("./types/types").MaxbotOptions;
 export type ApiResult = import("./types/types").ApiResult;
-export type PostType = "get_status" | "get_contact" | "get_prot" | "put_contact" | "set_contact" | "send_text" | "send_image" | "send_file" | "send_sound";
+export type PostType = "get_status" | "get_segmentation" | "get_contact" | "get_prot" | "put_contact" | "set_contact" | "send_text" | "send_image" | "send_file" | "send_sound";
 export type IRequestPayload = import("./types/types").IRequestPayload;
 export type IGetStatusResult = import("./types/status").IGetStatusResult;
 export type IStatusData = import("./types/status").IStatusData;
+export type ISegmentationData = import("./types/segmentation").ISegmentationData;
 export type IGetSegmentationResult = import("./types/segmentation").IGetSegmentationResult;
 export type IContactFilter = import("./types/contact").IContactFilter;
 export type IContactData = import("./types/contact").IContactData;

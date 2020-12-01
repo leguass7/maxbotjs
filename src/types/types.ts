@@ -19,6 +19,7 @@ export interface FilterByDate {
 
 export type PostType =
   | 'get_status'
+  | 'get_segmentation'
   | 'get_contact'
   | 'get_prot'
   | 'put_contact'
