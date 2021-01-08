@@ -1,6 +1,6 @@
 export interface MaxbotOptions {
   token: string
-  timeout: number
+  timeout?: number
   baseURL?: string
 }
 
