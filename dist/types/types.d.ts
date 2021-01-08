@@ -1,6 +1,11 @@
+import { CancelTokenSource, CancelToken } from 'axios';
+export interface ICancelSource {
+    idToken: CancelToken | string;
+    source: CancelTokenSource;
+}
 export interface MaxbotOptions {
     token: string;
-    timeout: number;
+    timeout?: number;
     baseURL?: string;
 }
 export interface ApiResult {

@@ -12,6 +12,9 @@ export type IContactData = import("./types/contact").IContactData;
 export type IGetContactResult = import("./types/contact").IGetContactResult;
 export type IProtFilter = import("./types/protocol").IProtFilter;
 export type IGetProtResult = import("./types/protocol").IGetProtResult;
+export type ICancelSource = import("./types/types").ICancelSource;
+export type CancelTokenSource = import("axios").CancelTokenSource;
+export type CancelToken = import("axios").CancelToken;
 /**
  * @class
  * Class Maxbot methods:
@@ -36,6 +39,8 @@ declare class Maxbot {
     /** @type {MaxbotOptions} */
     config: MaxbotOptions;
     ready: boolean;
+    /** @type {ICancelSource[]} */
+    cancelSources: ICancelSource[];
     /**
      * Verifica se bot esta pronto
      * @method isReady
@@ -137,4 +142,23 @@ declare class Maxbot {
      * @returns {Promise<ApiResult>}
      */
     private requestApi;
+    /**
+     * @private
+     * @method addCancelSource
+     * @param {CancelTokenSource} source
+     * @returns {this}
+     */
+    private addCancelSource;
+    /**
+     * @private
+     * @method removeCancelSource
+     * @param {CancelToken|string} idTokenSource
+     * @returns {this}
+     */
+    private removeCancelSource;
+    /**
+     * @method cancel
+     * @returns {this}
+     */
+    cancel(): this;
 }
