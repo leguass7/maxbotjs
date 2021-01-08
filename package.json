@@ -1,6 +1,6 @@
 {
   "name": "maxbotjs",
-  "version": "0.1.1",
+  "version": "0.1.2-alpha.0",
   "description": "Library to connect MAXBOT",
   "main": "./dist/index.js",
   "types": "./dist",
@@ -16,7 +16,8 @@
     "start": "rollup -c -w",
     "build": "rollup -c",
     "lint": "eslint src --ext js,ts",
-    "test": "cross-env NODE_ENV=test jest --coverage --detectOpenHandles --forceExit"
+    "test": "cross-env NODE_ENV=test jest --coverage --detectOpenHandles --forceExit",
+    "release": "standard-version --no-verify"
   },
   "keywords": [
     "maxbot",
