@@ -69,6 +69,7 @@ Contribuições serão bem vindas.
 #### Métodos para serem implementados na classe ```Maxbot```
 - [x] getStatus()
 - [x] getSegmentation()
+- [x] getTemplate()
 - [x] getContact()
 - [ ] getProt()
 - [x] putContact()

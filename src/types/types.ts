@@ -15,7 +15,6 @@ export interface ApiResult {
   msg: 'Success' | 'Failure'
   contactId?: number
 }
-
 export interface FilterByDate {
   /** YYYY-MM-DD */
   dateStart?: string
@@ -38,4 +37,15 @@ export type PostType =
 export interface IRequestPayload {
   cmd?: PostType
   token?: string
+}
+// results
+export interface ITemplate {
+  id: number
+  type: string
+  title: string
+  // eslint-disable-next-line camelcase
+  for_use: number
+}
+export interface ITemplateResult extends ApiResult {
+  template: ITemplate[]
 }

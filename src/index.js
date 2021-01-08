@@ -1,6 +1,7 @@
 /**
  * @typedef {import('./types/types').MaxbotOptions} MaxbotOptions
  * @typedef {import('./types/types').ApiResult} ApiResult
+ * @typedef {import('./types/types').ITemplateResult} ITemplateResult
  * @typedef {import('./types/types').PostType} PostType
  * @typedef {import('./types/types').IRequestPayload} IRequestPayload
  * @typedef {import('./types/status').IGetStatusResult} IGetStatusResult
@@ -38,6 +39,7 @@ import Api, { getCancelToken } from './Api'
 const postType = {
   GETSTATUS: 'get_status',
   GETSEGMENTATION: 'get_segmentation',
+  GETTEMPLATE: 'get_template',
   GETCONTACT: 'get_contact',
   GETPROT: 'get_prot',
   PUTCONTACT: 'put_contact',
@@ -58,6 +60,7 @@ const baseURL = 'https://mbr.maxbot.com.br/api/v1.php'
  * - getMe
  * - getStatus
  * - getSegmentation
+ * - getTemplate
  * - getProt
  * - putContact
  * - setContact
@@ -144,6 +147,16 @@ class Maxbot {
    */
   async getSegmentation() {
     const res = await this.requestApi(postType.GETSEGMENTATION)
+    return res
+  }
+
+  /**
+   * Importar templates do Maxbot
+   * @method getTemplate
+   * @returns {Promise<ITemplateResult>}
+   */
+  async getTemplate() {
+    const res = await this.requestApi(postType.GETTEMPLATE)
     return res
   }
 
