@@ -13,3 +13,7 @@ axiosInstance.interceptors.request.use(interceptorRequest)
 axiosInstance.interceptors.response.use(interceptorResponse, onResponseError)
 
 export default axiosInstance
+
+export function getCancelToken() {
+  return axios.CancelToken
+}

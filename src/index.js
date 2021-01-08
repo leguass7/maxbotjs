@@ -12,6 +12,10 @@
  * @typedef {import('./types/contact').IGetContactResult} IGetContactResult
  * @typedef {import('./types/protocol').IProtFilter} IProtFilter
  * @typedef {import('./types/protocol').IGetProtResult} IGetProtResult
+ * @typedef {import('./types/types').ICancelSource} ICancelSource
+ *
+ * @typedef {import('axios').CancelTokenSource} CancelTokenSource
+ * @typedef {import('axios').CancelToken} CancelToken
  *
  * @exports MaxbotOptions
  * @exports ApiResult
@@ -25,8 +29,11 @@
  * @exports IGetContactResult
  * @exports IProtFilter
  * @exports IGetProtResult
+ * @exports ICancelSource
+ * @exports CancelTokenSource
+ * @exports CancelToken
  */
-import Api from './Api'
+import Api, { getCancelToken } from './Api'
 
 const postType = {
   GETSTATUS: 'get_status',
@@ -68,6 +75,8 @@ class Maxbot {
     /** @type {MaxbotOptions} */
     this.config = { token: '', timeout: 3000, baseURL }
     this.ready = false
+    /** @type {ICancelSource[]} */
+    this.cancelSources = []
 
     this.setMe(params)
     return this
@@ -227,6 +236,11 @@ class Maxbot {
    */
   async requestApi(type, payload = {}) {
     const self = this
+
+    const source = getCancelToken().source()
+    const cancelToken = source.token
+    this.addCancelSource(source)
+
     const result = await Api.post(
       null,
       {
@@ -236,11 +250,53 @@ class Maxbot {
       },
       {
         timeout: self.config.timeout,
-        baseURL: self.config.baseURL
+        baseURL: self.config.baseURL,
+        cancelToken
       }
     )
-    // console.log('requestApi', type, result)
+
+    this.removeCancelSource(cancelToken)
     return result
+  }
+
+  /**
+   * @private
+   * @method addCancelSource
+   * @param {CancelTokenSource} source
+   * @returns {this}
+   */
+  addCancelSource(source) {
+    this.cancelSources.push({
+      idToken: source.token,
+      source
+    })
+    return this
+  }
+
+  /**
+   * @private
+   * @method removeCancelSource
+   * @param {CancelToken|string} idTokenSource
+   * @returns {this}
+   */
+  removeCancelSource(idTokenSource) {
+    if (idTokenSource) {
+      const newList = this.cancelSources.filter(({ idToken }) => idToken !== idTokenSource)
+      this.cancelSources = newList || []
+      return this
+    }
+    this.cancelSources = []
+    return this
+  }
+
+  /**
+   * @method cancel
+   * @returns {this}
+   */
+  cancel() {
+    this.cancelSources.forEach(({ source }) => source && source.cancel())
+    this.removeCancelSource()
+    return this
   }
 }
 
