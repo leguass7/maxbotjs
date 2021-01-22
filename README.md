@@ -78,9 +78,9 @@ Contribuições serão bem vindas.
 - [x] setContact()
 - [ ] openFollowup()
 - [x] sendText()
-- [ ] sendImage()
-- [ ] sendFile()
-- [ ] sendSound()
+- [x] sendImage()
+- [x] sendFile()
+- [x] sendSound()
 
 #### Documentação
 - [ ] Documentos com melhor explicação que as encontradas no site oficial

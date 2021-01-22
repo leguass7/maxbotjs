@@ -2,18 +2,21 @@ export default Maxbot;
 export type MaxbotOptions = import("./types/types").MaxbotOptions;
 export type ApiResult = import("./types/types").ApiResult;
 export type ITemplateResult = import("./types/types").ITemplateResult;
-export type PostType = "get_status" | "get_segmentation" | "get_contact" | "get_prot" | "put_contact" | "set_contact" | "send_text" | "send_image" | "send_file" | "send_sound";
+export type IServiceSectorResult = import("./types/types").IServiceSectorResult;
+export type IAttendantResult = import("./types/types").IAttendantResult;
+export type PostType = "get_status" | "get_segmentation" | "get_template" | "get_service_sector" | "get_contact" | "get_prot" | "put_contact" | "set_contact" | "send_text" | "send_image" | "send_file" | "send_sound";
 export type IRequestPayload = import("./types/types").IRequestPayload;
+export type ICancelSource = import("./types/types").ICancelSource;
 export type IGetStatusResult = import("./types/status").IGetStatusResult;
 export type IStatusData = import("./types/status").IStatusData;
 export type ISegmentationData = import("./types/segmentation").ISegmentationData;
 export type IGetSegmentationResult = import("./types/segmentation").IGetSegmentationResult;
 export type IContactFilter = import("./types/contact").IContactFilter;
 export type IContactData = import("./types/contact").IContactData;
+export type ISetContactData = import("./types/contact").ISetContactData;
 export type IGetContactResult = import("./types/contact").IGetContactResult;
 export type IProtFilter = import("./types/protocol").IProtFilter;
 export type IGetProtResult = import("./types/protocol").IGetProtResult;
-export type ICancelSource = import("./types/types").ICancelSource;
 export type IForWhoFilter = import("./types/sending").IForWhoFilter;
 export type CancelTokenSource = import("axios").CancelTokenSource;
 export type CancelToken = import("axios").CancelToken;
@@ -25,9 +28,11 @@ export type CancelToken = import("axios").CancelToken;
  * - getStatus
  * - getSegmentation
  * - getTemplate
+ * - getServiceSector
  * - getProt
  * - putContact
  * - setContact
+ * - openFollowup
  * - sendText
  * - sendImage
  * - sendFile
@@ -44,6 +49,26 @@ declare class Maxbot {
     ready: boolean;
     /** @type {ICancelSource[]} */
     cancelSources: ICancelSource[];
+    /** @private */
+    private allowedExt;
+    /**
+     * @private
+     * @method addError
+     * @param {string} msg
+     */
+    private addError;
+    /**
+     * @method isValidExt
+     * @param {'file'|'image'|'sound'} type
+     * @param {string} ext
+     * @returns {boolean}
+     * @example
+     * maxbot.isValidExt('.exe', 'file') // false
+     * maxbot.isValidExt('.pdf', 'file') // true
+     * maxbot.isValidExt('pdf') // true
+     * maxbot.isValidExt('.png', 'image') // true
+     */
+    isValidExt(extension: any, type?: 'file' | 'image' | 'sound'): boolean;
     /**
      * Verifica se bot esta pronto
      * @method isReady
@@ -84,6 +109,18 @@ declare class Maxbot {
      */
     getTemplate(): Promise<ITemplateResult>;
     /**
+     * Importar service sectors do Maxbot
+     * @method getServiceSector
+     * @returns {Promise<IServiceSectorResult>}
+     */
+    getServiceSector(): Promise<IServiceSectorResult>;
+    /**
+     * Importar atendentes do Maxbot
+     * @method getAttendant
+     * @returns {Promise<IAttendantResult>}
+     */
+    getAttendant(): Promise<IAttendantResult>;
+    /**
      * Importar a ficha de cadastro do contato
      * @method getContact
      * @param {IContactFilter} filter
@@ -107,10 +144,17 @@ declare class Maxbot {
     /**
      * Atualizar dados de um contato existente
      * @method setContact
-     * @param {IContactData} contactData
+     * @param {ISetContactData} contactData
      * @returns {Promise<ApiResult>}
      */
-    setContact(contactData: IContactData): Promise<ApiResult>;
+    setContact(contactData: ISetContactData): Promise<ApiResult>;
+    /**
+     * Abrir um followup do Maxbot
+     * @method openFollowup
+     * @param {IFollowupData} followupData
+     * @returns {Promise<ApiResult>}
+     */
+    openFollowup(followupData: any): Promise<ApiResult>;
     /**
      * Envia uma mensagem de texto para um contato existente
      * @method sendText
@@ -122,27 +166,27 @@ declare class Maxbot {
     /**
      * Envia uma imagem para um contato existente
      * @method sendImage
-     * @param {String|IContactFilter} forWho
+     * @param {IForWhoFilter} forWho
      * @param {String} urlImage
      * @returns {Promise<ApiResult>}
      */
-    sendImage(forWho: string | IContactFilter, urlImage: string): Promise<ApiResult>;
+    sendImage(forWho: IForWhoFilter, urlImage: string): Promise<ApiResult>;
     /**
      * Envia um arquivo para um contato existente
      * @method sendFile
-     * @param {String|IContactFilter} forWho
+     * @param {IForWhoFilter} forWho
      * @param {String} urlFile
      * @returns {Promise<ApiResult>}
      */
-    sendFile(forWho: string | IContactFilter, urlFile: string): Promise<ApiResult>;
+    sendFile(forWho: IForWhoFilter, urlFile: string): Promise<ApiResult>;
     /**
      * Envia um audio para um contato existente
      * @method sendSound
-     * @param {String|IContactFilter} forWho
+     * @param {IForWhoFilter} forWho
      * @param {String} urlSound
      * @returns {Promise<ApiResult>}
      */
-    sendSound(forWho: string | IContactFilter, urlSound: string): Promise<ApiResult>;
+    sendSound(forWho: IForWhoFilter, urlSound: string): Promise<ApiResult>;
     /**
      * @private
      * @method requestApi

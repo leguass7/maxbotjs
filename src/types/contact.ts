@@ -43,6 +43,32 @@ export interface IContactData {
   currentAttendant: string
 }
 
+export interface ISetContactData {
+  forContactId: number
+  segmentation?: string[]
+  tag?: string
+  name?: string
+  surname?: string
+  gender?: Gender
+  /** data YYYY-MM-DD */
+  birth?: string
+  brPersonType?: PersonType // fisica ou juridica
+  brCpf?: string
+  brCnpj?: string
+  company?: string
+  email?: string
+  whatsapp?: string
+  mobilePhone?: string
+  phone?: string
+  country: string
+  state?: string
+  city?: string
+  profession?: Profession
+  externalId?: number
+  avatarUrl?: string
+  obs?: string
+}
+
 export interface IGetContactResult extends ApiResult {
   data: IContactData[]
 }

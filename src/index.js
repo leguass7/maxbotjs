@@ -4,41 +4,51 @@
  * @typedef {import('./types/types').ITemplateResult} ITemplateResult
  * @typedef {import('./types/types').IServiceSectorResult} IServiceSectorResult
  * @typedef {import('./types/types').IAttendantResult} IAttendantResult
- *
  * @typedef {import('./types/types').PostType} PostType
  * @typedef {import('./types/types').IRequestPayload} IRequestPayload
+ * @typedef {import('./types/types').ICancelSource} ICancelSource
+ *
+ * @exports MaxbotOptions
+ * @exports ApiResult
+ * @exports ITemplateResult
+ * @exports IServiceSectorResult
+ * @exports IAttendantResult
+ * @exports PostType
+ * @exports IRequestPayload
+ * @exports ICancelSource
+ *
  * @typedef {import('./types/status').IGetStatusResult} IGetStatusResult
  * @typedef {import('./types/status').IStatusData} IStatusData
  * @typedef {import('./types/segmentation').ISegmentationData} ISegmentationData
  * @typedef {import('./types/segmentation').IGetSegmentationResult} IGetSegmentationResult
  * @typedef {import('./types/contact').IContactFilter} IContactFilter
  * @typedef {import('./types/contact').IContactData} IContactData
+ * @typedef {import('./types/contact').ISetContactData} ISetContactData
  * @typedef {import('./types/contact').IGetContactResult} IGetContactResult
  * @typedef {import('./types/protocol').IProtFilter} IProtFilter
  * @typedef {import('./types/protocol').IGetProtResult} IGetProtResult
- * @typedef {import('./types/types').ICancelSource} ICancelSource
  * @typedef {import('./types/sending').IForWhoFilter} IForWhoFilter
  *
- * @typedef {import('axios').CancelTokenSource} CancelTokenSource
- * @typedef {import('axios').CancelToken} CancelToken
- *
- * @exports MaxbotOptions
- * @exports ApiResult
- * @exports PostType
- * @exports IRequestPayload
  * @exports IGetStatusResult
  * @exports IStatusData
+ * @exports ISegmentationData
  * @exports IGetSegmentationResult
  * @exports IContactFilter
  * @exports IContactData
+ * @exports ISetContactData
  * @exports IGetContactResult
  * @exports IProtFilter
  * @exports IGetProtResult
- * @exports ICancelSource
+ * @exports IForWhoFilter
+ *
+ * @typedef {import('axios').CancelTokenSource} CancelTokenSource
+ * @typedef {import('axios').CancelToken} CancelToken
  * @exports CancelTokenSource
  * @exports CancelToken
+ *
  */
 import Api, { getCancelToken } from './Api'
+import { prepareSendFilter, extractExtension, isValidURL, replaceAll } from './utils'
 
 const postType = {
   GETSTATUS: 'get_status',
@@ -50,6 +60,7 @@ const postType = {
   GETPROT: 'get_prot',
   PUTCONTACT: 'put_contact',
   SETCONTACT: 'set_contact',
+  OPENFOLLOWUP: 'open_followup',
   SENDTEXT: 'send_text',
   SENDIMAGE: 'send_image',
   SENDFILE: 'send_file',
@@ -58,24 +69,6 @@ const postType = {
 
 const baseURL = 'https://mbr.maxbot.com.br/api/v1.php'
 // const baseURL = 'http://localhost1:3003/test/hookhttp1'
-/**
- * @param {IForWhoFilter} data
- */
-function prepareSendFilter(data) {
-  const { externalId, whatsapp, brCpf } = data
-  const result = {}
-  if (externalId) {
-    result.ctExternalId = externalId
-  } else if (whatsapp) {
-    result.ctWhatsapp = whatsapp
-  } else if (brCpf) {
-    result.ctBrCpf = brCpf
-  } else {
-    return false
-  }
-  return result
-}
-
 /**
  * @class
  * Class Maxbot methods:
@@ -88,6 +81,7 @@ function prepareSendFilter(data) {
  * - getProt
  * - putContact
  * - setContact
+ * - openFollowup
  * - sendText
  * - sendImage
  * - sendFile
@@ -102,11 +96,54 @@ class Maxbot {
     /** @type {MaxbotOptions} */
     this.config = { token: '', timeout: 3000, baseURL }
     this.ready = false
+
     /** @type {ICancelSource[]} */
     this.cancelSources = []
 
+    /** @private */
+    this.allowedExt = {
+      file: ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pps'],
+      image: ['jpg', 'jpeg', 'png', 'gif'],
+      sound: ['mp3']
+    }
+
     this.setMe(params)
     return this
+  }
+
+  /**
+   * @private
+   * @method addError
+   * @param {string} msg
+   */
+  addError(msg) {
+    return {
+      status: 0,
+      msg
+    }
+  }
+
+  /**
+   * @method isValidExt
+   * @param {'file'|'image'|'sound'} type
+   * @param {string} ext
+   * @returns {boolean}
+   * @example
+   * maxbot.isValidExt('.exe', 'file') // false
+   * maxbot.isValidExt('.pdf', 'file') // true
+   * maxbot.isValidExt('pdf') // true
+   * maxbot.isValidExt('.png', 'image') // true
+   */
+  isValidExt(extension, type = '') {
+    const ext = replaceAll(extension, '.', '')
+    if (!type) {
+      const testAll = Object.keys(this.allowedExt).reduce((all, key) => {
+        this.allowedExt[key].forEach(e => all.push(e))
+        return all
+      }, [])
+      return testAll.includes(replaceAll(ext, '.', ''))
+    }
+    return !!this.allowedExt[type].includes(replaceAll(ext, '.', ''))
   }
 
   /**
@@ -240,11 +277,22 @@ class Maxbot {
   /**
    * Atualizar dados de um contato existente
    * @method setContact
-   * @param {IContactData} contactData
+   * @param {ISetContactData} contactData
    * @returns {Promise<ApiResult>}
    */
   async setContact(contactData) {
     const res = await this.requestApi(postType.SETCONTACT, contactData)
+    return res
+  }
+
+  /**
+   * Abrir um followup do Maxbot
+   * @method openFollowup
+   * @param {IFollowupData} followupData
+   * @returns {Promise<ApiResult>}
+   */
+  async openFollowup(followupData) {
+    const res = await this.requestApi(postType.OPENFOLLOWUP, followupData)
     return res
   }
 
@@ -270,32 +318,64 @@ class Maxbot {
    * @param {String} urlImage
    * @returns {Promise<ApiResult>}
    */
-  // async sendImage(forWho, urlImage) {
-  //   const filter = prepareSendFilter(forWho)
-  //   if (!filter || !urlImage) return false
+  async sendImage(forWho, urlImage) {
+    const filter = prepareSendFilter(forWho)
+    if (!filter) return this.addError('internal: no contact')
+    if (!isValidURL(urlImage)) return this.addError('internal: invalid url')
 
-  //   const payload = { ...filter, imgUrl: urlImage, imageExtension: 'jpeg' }
-  //   const res = await this.requestApi(postType.SENDIMAGE, payload)
-  //   return res
-  // }
+    const imageExtension = extractExtension(urlImage)
+    if (!this.isValidExt(imageExtension, 'image')) {
+      return this.addError(`internal: invalid extension ${imageExtension}`)
+    }
+
+    const payload = { ...filter, imageUrl: urlImage, imageExtension }
+    const res = await this.requestApi(postType.SENDIMAGE, payload)
+    return res
+  }
 
   /**
    * Envia um arquivo para um contato existente
    * @method sendFile
-   * @param {String|IContactFilter} forWho
+   * @param {IForWhoFilter} forWho
    * @param {String} urlFile
    * @returns {Promise<ApiResult>}
    */
-  async sendFile(forWho, urlFile) {}
+  async sendFile(forWho, urlFile) {
+    const filter = prepareSendFilter(forWho)
+    if (!filter) return this.addError('internal: no contact')
+    if (!isValidURL(urlFile)) return this.addError('internal: invalid url')
+
+    const fileExtension = extractExtension(urlFile)
+    if (!this.isValidExt(fileExtension, 'file')) {
+      return this.addError(`internal: invalid extension ${fileExtension}`)
+    }
+
+    const payload = { ...filter, fileUrl: urlFile, fileExtension }
+    const res = await this.requestApi(postType.SENDFILE, payload)
+    return res
+  }
 
   /**
    * Envia um audio para um contato existente
    * @method sendSound
-   * @param {String|IContactFilter} forWho
+   * @param {IForWhoFilter} forWho
    * @param {String} urlSound
    * @returns {Promise<ApiResult>}
    */
-  async sendSound(forWho, urlSound) {}
+  async sendSound(forWho, urlSound) {
+    const filter = prepareSendFilter(forWho)
+    if (!filter) return this.addError('internal: no contact')
+    if (!isValidURL(urlSound)) return this.addError('internal: invalid url')
+
+    const soundExtension = extractExtension(urlSound)
+    if (!this.isValidExt(soundExtension, 'sound')) {
+      return this.addError(`internal: invalid extension ${soundExtension}`)
+    }
+
+    const payload = { ...filter, soundUrl: urlSound, soundExtension }
+    const res = await this.requestApi(postType.SENDSOUND, payload)
+    return res
+  }
 
   /**
    * @private
