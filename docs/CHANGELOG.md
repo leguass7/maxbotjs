@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/leguass7/maxbotjs/compare/v0.1.2-alpha.3...v0.1.3) (2021-01-22)
+
 ### [0.1.2-alpha.3](https://github.com/leguass7/maxbotjs/compare/v0.1.2-alpha.2...v0.1.2-alpha.3) (2021-01-22)
 
 
