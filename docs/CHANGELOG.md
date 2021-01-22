@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2-alpha.2](https://github.com/leguass7/maxbotjs/compare/v0.1.2-alpha.1...v0.1.2-alpha.2) (2021-01-22)
+
+
+### Features
+
+* added method get template ([7cc594e](https://github.com/leguass7/maxbotjs/commit/7cc594ef43e8ea2446bee751dcfe61432b3f2021))
+* added method sendText ([6274e6b](https://github.com/leguass7/maxbotjs/commit/6274e6b4a90ae2cf8ab203fbabbdff9bafaa1fab))
+
 ### [0.1.2-alpha.1](https://github.com/leguass7/maxbotjs/compare/v0.1.2-alpha.0...v0.1.2-alpha.1) (2021-01-08)
 
 ### [0.1.2-alpha.0](https://github.com/leguass7/maxbotjs/compare/v0.1.1...v0.1.2-alpha.0) (2021-01-08)
