@@ -74,7 +74,7 @@ Contribuições serão bem vindas.
 - [ ] getProt()
 - [x] putContact()
 - [x] setContact()
-- [ ] sendText()
+- [x] sendText()
 - [ ] sendImage()
 - [ ] sendFile()
 - [ ] sendSound()
