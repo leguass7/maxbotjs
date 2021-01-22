@@ -70,11 +70,20 @@ describe('Test Class', () => {
       expect(response).toEqual(expect.objectContaining(expected))
     })
 
-    test('Should send_text', async () => {
+    test('Should get_service_sector', async () => {
       const expected = { status: 1, msg: 'Success' }
-      const response = await maxbot.sendText({ whatsapp: whatsappTest }, 'Hello Word')
+      const response = await maxbot.getServiceSector()
+      // console.log('response get_segmentation', response)
       expect(response).toEqual(expect.objectContaining(expected))
+      expect(response).toHaveProperty('serviceSector')
+      console.log('response', response)
     })
+
+    // test('Should send_text', async () => {
+    //   const expected = { status: 1, msg: 'Success' }
+    //   const response = await maxbot.sendText({ whatsapp: whatsappTest }, 'Hello Word')
+    //   expect(response).toEqual(expect.objectContaining(expected))
+    // })
 
     // test('Should send_image', async () => {
     //   const expected = { status: 1, msg: 'Success' }

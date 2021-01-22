@@ -1,4 +1,6 @@
 import { CancelTokenSource, CancelToken } from 'axios'
+import { ITemplate } from './template'
+import { IServiceSector } from './serviceSector'
 export interface ICancelSource {
   idToken: CancelToken | string
   source: CancelTokenSource
@@ -25,6 +27,8 @@ export interface FilterByDate {
 export type PostType =
   | 'get_status'
   | 'get_segmentation'
+  | 'get_template'
+  | 'get_service_sector'
   | 'get_contact'
   | 'get_prot'
   | 'put_contact'
@@ -33,19 +37,17 @@ export type PostType =
   | 'send_image'
   | 'send_file'
   | 'send_sound'
-
 export interface IRequestPayload {
   cmd?: PostType
   token?: string
 }
+
 // results
-export interface ITemplate {
-  id: number
-  type: string
-  title: string
-  // eslint-disable-next-line camelcase
-  for_use: number
-}
+
 export interface ITemplateResult extends ApiResult {
   template: ITemplate[]
+}
+
+export interface IServiceSectorResult extends ApiResult {
+  serviceSector: IServiceSector[]
 }

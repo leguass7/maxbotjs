@@ -2,6 +2,8 @@
  * @typedef {import('./types/types').MaxbotOptions} MaxbotOptions
  * @typedef {import('./types/types').ApiResult} ApiResult
  * @typedef {import('./types/types').ITemplateResult} ITemplateResult
+ * @typedef {import('./types/types').IServiceSectorResult} IServiceSectorResult
+ *
  * @typedef {import('./types/types').PostType} PostType
  * @typedef {import('./types/types').IRequestPayload} IRequestPayload
  * @typedef {import('./types/status').IGetStatusResult} IGetStatusResult
@@ -41,6 +43,7 @@ const postType = {
   GETSTATUS: 'get_status',
   GETSEGMENTATION: 'get_segmentation',
   GETTEMPLATE: 'get_template',
+  GETSERVICESECTOR: 'get_service_sector',
   GETCONTACT: 'get_contact',
   GETPROT: 'get_prot',
   PUTCONTACT: 'put_contact',
@@ -79,6 +82,7 @@ function prepareSendFilter(data) {
  * - getStatus
  * - getSegmentation
  * - getTemplate
+ * - getServiceSector
  * - getProt
  * - putContact
  * - setContact
@@ -175,6 +179,16 @@ class Maxbot {
    */
   async getTemplate() {
     const res = await this.requestApi(postType.GETTEMPLATE)
+    return res
+  }
+
+  /**
+   * Importar service sectors do Maxbot
+   * @method getServiceSector
+   * @returns {Promise<IServiceSectorResult>}
+   */
+  async getServiceSector() {
+    const res = await this.requestApi(postType.GETSERVICESECTOR)
     return res
   }
 
