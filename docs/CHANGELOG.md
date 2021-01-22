@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.2-alpha.3](https://github.com/leguass7/maxbotjs/compare/v0.1.2-alpha.2...v0.1.2-alpha.3) (2021-01-22)
+
+
+### Features
+
+* added method getAttendant ([59a9627](https://github.com/leguass7/maxbotjs/commit/59a96274c0bef2422f29da3be2ba8b4049954be3))
+* added method getServiceSector ([51a45d6](https://github.com/leguass7/maxbotjs/commit/51a45d64e9d722ddb76cffcc651fb14badac8675))
+* methods, utils, check url, cjeck extension ([33f184f](https://github.com/leguass7/maxbotjs/commit/33f184f668bc054f5e0f801825cbc9c8cbae9623))
+
 ### [0.1.2-alpha.2](https://github.com/leguass7/maxbotjs/compare/v0.1.2-alpha.1...v0.1.2-alpha.2) (2021-01-22)
 
 
