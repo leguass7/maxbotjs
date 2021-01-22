@@ -71,7 +71,7 @@ Contribuições serão bem vindas.
 - [x] getSegmentation()
 - [x] getTemplate()
 - [x] getServiceSector()
-- [ ] getAttendant()
+- [x] getAttendant()
 - [x] getContact()
 - [ ] getProt()
 - [x] putContact()

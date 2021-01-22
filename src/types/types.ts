@@ -1,6 +1,7 @@
 import { CancelTokenSource, CancelToken } from 'axios'
 import { ITemplate } from './template'
 import { IServiceSector } from './serviceSector'
+import { IAttendant } from './attendant'
 export interface ICancelSource {
   idToken: CancelToken | string
   source: CancelTokenSource
@@ -50,4 +51,7 @@ export interface ITemplateResult extends ApiResult {
 
 export interface IServiceSectorResult extends ApiResult {
   serviceSector: IServiceSector[]
+}
+export interface IAttendantResult extends ApiResult {
+  attendant: IAttendant[]
 }

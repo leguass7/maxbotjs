@@ -3,6 +3,7 @@
  * @typedef {import('./types/types').ApiResult} ApiResult
  * @typedef {import('./types/types').ITemplateResult} ITemplateResult
  * @typedef {import('./types/types').IServiceSectorResult} IServiceSectorResult
+ * @typedef {import('./types/types').IAttendantResult} IAttendantResult
  *
  * @typedef {import('./types/types').PostType} PostType
  * @typedef {import('./types/types').IRequestPayload} IRequestPayload
@@ -44,6 +45,7 @@ const postType = {
   GETSEGMENTATION: 'get_segmentation',
   GETTEMPLATE: 'get_template',
   GETSERVICESECTOR: 'get_service_sector',
+  GETATTENDANT: 'get_attendant',
   GETCONTACT: 'get_contact',
   GETPROT: 'get_prot',
   PUTCONTACT: 'put_contact',
@@ -189,6 +191,16 @@ class Maxbot {
    */
   async getServiceSector() {
     const res = await this.requestApi(postType.GETSERVICESECTOR)
+    return res
+  }
+
+  /**
+   * Importar atendentes do Maxbot
+   * @method getAttendant
+   * @returns {Promise<IAttendantResult>}
+   */
+  async getAttendant() {
+    const res = await this.requestApi(postType.GETATTENDANT)
     return res
   }
 
