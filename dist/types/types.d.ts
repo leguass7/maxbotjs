@@ -24,3 +24,12 @@ export interface IRequestPayload {
     cmd?: PostType;
     token?: string;
 }
+export interface ITemplate {
+    id: number;
+    type: string;
+    title: string;
+    for_use: number;
+}
+export interface ITemplateResult extends ApiResult {
+    template: ITemplate[];
+}

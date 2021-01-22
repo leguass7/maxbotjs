@@ -14,6 +14,7 @@
  * @typedef {import('./types/protocol').IProtFilter} IProtFilter
  * @typedef {import('./types/protocol').IGetProtResult} IGetProtResult
  * @typedef {import('./types/types').ICancelSource} ICancelSource
+ * @typedef {import('./types/sending').IForWhoFilter} IForWhoFilter
  *
  * @typedef {import('axios').CancelTokenSource} CancelTokenSource
  * @typedef {import('axios').CancelToken} CancelToken
@@ -52,6 +53,23 @@ const postType = {
 
 const baseURL = 'https://mbr.maxbot.com.br/api/v1.php'
 // const baseURL = 'http://localhost1:3003/test/hookhttp1'
+/**
+ * @param {IForWhoFilter} data
+ */
+function prepareSendFilter(data) {
+  const { externalId, whatsapp, brCpf } = data
+  const result = {}
+  if (externalId) {
+    result.ctExternalId = externalId
+  } else if (whatsapp) {
+    result.ctWhatsapp = whatsapp
+  } else if (brCpf) {
+    result.ctBrCpf = brCpf
+  } else {
+    return false
+  }
+  return result
+}
 
 /**
  * @class
@@ -207,20 +225,33 @@ class Maxbot {
   /**
    * Envia uma mensagem de texto para um contato existente
    * @method sendText
-   * @param {String|IContactFilter} forWho
+   * @param {IForWhoFilter} forWho
    * @param {String} text
    * @returns {Promise<ApiResult>}
    */
-  async sendText(forWho, text) {}
+  async sendText(forWho, text) {
+    const filter = prepareSendFilter(forWho)
+    if (!filter) return false
+    const payload = { ...filter, msg: text }
+    const res = await this.requestApi(postType.SENDTEXT, payload)
+    return res
+  }
 
   /**
    * Envia uma imagem para um contato existente
    * @method sendImage
-   * @param {String|IContactFilter} forWho
+   * @param {IForWhoFilter} forWho
    * @param {String} urlImage
    * @returns {Promise<ApiResult>}
    */
-  async sendImage(forWho, urlImage) {}
+  // async sendImage(forWho, urlImage) {
+  //   const filter = prepareSendFilter(forWho)
+  //   if (!filter || !urlImage) return false
+
+  //   const payload = { ...filter, imgUrl: urlImage, imageExtension: 'jpeg' }
+  //   const res = await this.requestApi(postType.SENDIMAGE, payload)
+  //   return res
+  // }
 
   /**
    * Envia um arquivo para um contato existente

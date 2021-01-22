@@ -1,6 +1,7 @@
 export default Maxbot;
 export type MaxbotOptions = import("./types/types").MaxbotOptions;
 export type ApiResult = import("./types/types").ApiResult;
+export type ITemplateResult = import("./types/types").ITemplateResult;
 export type PostType = "get_status" | "get_segmentation" | "get_contact" | "get_prot" | "put_contact" | "set_contact" | "send_text" | "send_image" | "send_file" | "send_sound";
 export type IRequestPayload = import("./types/types").IRequestPayload;
 export type IGetStatusResult = import("./types/status").IGetStatusResult;
@@ -13,6 +14,7 @@ export type IGetContactResult = import("./types/contact").IGetContactResult;
 export type IProtFilter = import("./types/protocol").IProtFilter;
 export type IGetProtResult = import("./types/protocol").IGetProtResult;
 export type ICancelSource = import("./types/types").ICancelSource;
+export type IForWhoFilter = import("./types/sending").IForWhoFilter;
 export type CancelTokenSource = import("axios").CancelTokenSource;
 export type CancelToken = import("axios").CancelToken;
 /**
@@ -22,6 +24,7 @@ export type CancelToken = import("axios").CancelToken;
  * - getMe
  * - getStatus
  * - getSegmentation
+ * - getTemplate
  * - getProt
  * - putContact
  * - setContact
@@ -75,6 +78,12 @@ declare class Maxbot {
      */
     getSegmentation(): Promise<IGetSegmentationResult>;
     /**
+     * Importar templates do Maxbot
+     * @method getTemplate
+     * @returns {Promise<ITemplateResult>}
+     */
+    getTemplate(): Promise<ITemplateResult>;
+    /**
      * Importar a ficha de cadastro do contato
      * @method getContact
      * @param {IContactFilter} filter
@@ -105,11 +114,11 @@ declare class Maxbot {
     /**
      * Envia uma mensagem de texto para um contato existente
      * @method sendText
-     * @param {String|IContactFilter} forWho
+     * @param {IForWhoFilter} forWho
      * @param {String} text
      * @returns {Promise<ApiResult>}
      */
-    sendText(forWho: string | IContactFilter, text: string): Promise<ApiResult>;
+    sendText(forWho: IForWhoFilter, text: string): Promise<ApiResult>;
     /**
      * Envia uma imagem para um contato existente
      * @method sendImage

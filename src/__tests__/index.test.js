@@ -4,6 +4,8 @@ import Maxbot from '../index'
 dotenv.config()
 
 const token = process.env.MAXBOT_TOKEN
+const whatsappTest = process.env.TEST_WHATSAPP
+// const imageTest = process.env.TEST_IMAGE_URL
 
 const maxbot = new Maxbot({ token })
 
@@ -67,6 +69,18 @@ describe('Test Class', () => {
       // console.log('response get_segmentation', response)
       expect(response).toEqual(expect.objectContaining(expected))
     })
+
+    test('Should send_text', async () => {
+      const expected = { status: 1, msg: 'Success' }
+      const response = await maxbot.sendText({ whatsapp: whatsappTest }, 'Hello Word')
+      expect(response).toEqual(expect.objectContaining(expected))
+    })
+
+    // test('Should send_image', async () => {
+    //   const expected = { status: 1, msg: 'Success' }
+    //   const response = await maxbot.sendImage({ whatsapp: whatsappTest }, imageTest)
+    //   expect(response).toEqual(expect.objectContaining(expected))
+    // })
 
     // test('Should create a contact', async () => {
     //   const expected = { status: 1, msg: 'Success' }
