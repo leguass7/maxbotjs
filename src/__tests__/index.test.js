@@ -151,15 +151,15 @@ describe('Test Class', () => {
       expect(response).toEqual(expect.objectContaining(apiExpectedSuccess))
     })
 
-    // test('Should send_file', async () => {
-    //   const response = await maxbot.sendFile(filterContact, env.fileTest)
-    //   expect(response).toEqual(expect.objectContaining(apiExpectedSuccess))
-    // })
+    test('Should send_file', async () => {
+      const response = await maxbot.sendFile(filterContact, env.fileTest)
+      expect(response).toEqual(expect.objectContaining(apiExpectedSuccess))
+    })
 
-    // test('Should send_sound', async () => {
-    //   const response = await maxbot.sendSound(filterContact, env.soundTest)
-    //   expect(response).toEqual(expect.objectContaining(apiExpectedSuccess))
-    // })
+    test('Should send_sound', async () => {
+      const response = await maxbot.sendSound(filterContact, env.soundTest)
+      expect(response).toEqual(expect.objectContaining(apiExpectedSuccess))
+    })
 
     // test('Should create a contact', async () => {
     //   const expected = { status: 1, msg: 'Success' }
