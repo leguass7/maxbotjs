@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/leguass7/maxbotjs/compare/v0.1.4-alpha.0...v0.1.4) (2021-02-15)
+
+
+### Features
+
+* added config debug, sendtext typings ([b59816a](https://github.com/leguass7/maxbotjs/commit/b59816a3da5e7819c13220e703f7c5ca61e02e91))
+* build ([ab41ef7](https://github.com/leguass7/maxbotjs/commit/ab41ef7b1f5b1c4c4c3d7fe4c0b85d33af23f44c))
+
+
+### Bug Fixes
+
+* nova instancia do axios a cada instancia do maxbot ([b84537f](https://github.com/leguass7/maxbotjs/commit/b84537fa1f97c444bf34fb19c7680af01308f83f))
+
 ### [0.1.4-alpha.0](https://github.com/leguass7/maxbotjs/compare/v0.1.3...v0.1.4-alpha.0) (2021-02-15)
 
 
