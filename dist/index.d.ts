@@ -18,6 +18,7 @@ export type IGetContactResult = import("./types/contact").IGetContactResult;
 export type IProtFilter = import("./types/protocol").IProtFilter;
 export type IGetProtResult = import("./types/protocol").IGetProtResult;
 export type IForWhoFilter = import("./types/sending").IForWhoFilter;
+export type ISendTextResult = import("./types/sending").ISendTextResult;
 export type CancelTokenSource = import("axios").CancelTokenSource;
 export type CancelToken = import("axios").CancelToken;
 /**
@@ -49,11 +50,22 @@ declare class Maxbot {
     ready: boolean;
     loggingPrefix: string;
     version: string;
+    Api: import("axios").AxiosInstance;
     /** @type {ICancelSource[]} */
     cancelSources: ICancelSource[];
     /** @private */
     private allowedExt;
     log(...args: any[]): void;
+    /**
+     * @private
+     * @method getCancelToken
+     */
+    private getCancelToken;
+    /**
+     * @private
+     * @method configureAxios
+     */
+    private configureAxios;
     /**
      * @private
      * @method configureRequests
@@ -173,9 +185,9 @@ declare class Maxbot {
      * @method sendText
      * @param {IForWhoFilter} forWho
      * @param {String} text
-     * @returns {Promise<ApiResult>}
+     * @returns {Promise<ISendTextResult>}
      */
-    sendText(forWho: IForWhoFilter, text: string): Promise<ApiResult>;
+    sendText(forWho: IForWhoFilter, text: string): Promise<ISendTextResult>;
     /**
      * Envia uma imagem para um contato existente
      * @method sendImage
