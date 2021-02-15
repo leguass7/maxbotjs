@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4-alpha.0](https://github.com/leguass7/maxbotjs/compare/v0.1.3...v0.1.4-alpha.0) (2021-02-15)
+
+
+### Bug Fixes
+
+* normalize prop ready ([7a5e1c6](https://github.com/leguass7/maxbotjs/commit/7a5e1c61b563bf78665d03ab0c34adae8c89da4a))
+
 ### [0.1.3](https://github.com/leguass7/maxbotjs/compare/v0.1.2-alpha.3...v0.1.3) (2021-01-22)
 
 ### [0.1.2-alpha.3](https://github.com/leguass7/maxbotjs/compare/v0.1.2-alpha.2...v0.1.2-alpha.3) (2021-01-22)
