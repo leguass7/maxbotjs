@@ -11,6 +11,7 @@ export interface MaxbotOptions {
   token: string
   timeout?: number
   baseURL?: string
+  debug?: boolean
 }
 
 export interface ApiResult {

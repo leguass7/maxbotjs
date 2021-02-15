@@ -47,10 +47,23 @@ declare class Maxbot {
     /** @type {MaxbotOptions} */
     config: MaxbotOptions;
     ready: boolean;
+    loggingPrefix: string;
+    version: string;
     /** @type {ICancelSource[]} */
     cancelSources: ICancelSource[];
     /** @private */
     private allowedExt;
+    log(...args: any[]): void;
+    /**
+     * @private
+     * @method configureRequests
+     */
+    private configureRequests;
+    /**
+     * @private
+     * @method configureRequests
+     */
+    private configureResponses;
     /**
      * @private
      * @method addError
@@ -75,7 +88,7 @@ declare class Maxbot {
      * @param {Boolean} force force api request status
      * @returns {Promise<Boolean>}
      */
-    isReady(force: boolean): Promise<boolean>;
+    isReady(force?: boolean): Promise<boolean>;
     /**
      * Configura
      * @method setMe

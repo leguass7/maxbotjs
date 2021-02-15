@@ -1,6 +1,9 @@
+/**
+ * @typedef {import('axios').AxiosRequestConfig} AxiosRequestConfig
+ * @typedef {import('axios').AxiosResponse} AxiosResponse
+ */
 import axios from 'axios'
-import interceptorRequest from './interceptorRequest'
-import interceptorResponse, { onResponseError } from './interceptorResponse'
+import { onResponseError } from './interceptorResponse'
 
 /** @type {import('axios').AxiosRequestConfig} */
 const axiosConfig = {
@@ -9,11 +12,37 @@ const axiosConfig = {
 }
 
 const axiosInstance = axios.create(axiosConfig)
-axiosInstance.interceptors.request.use(interceptorRequest)
-axiosInstance.interceptors.response.use(interceptorResponse, onResponseError)
 
 export default axiosInstance
 
 export function getCancelToken() {
   return axios.CancelToken
+}
+
+/**
+ * @callback RequestCallback
+ * @param {AxiosRequestConfig} config
+ * @returns {AxiosRequestConfig}
+ */
+
+/**
+ * @function setInterceptorRequest
+ * @param {RequestCallback} callback
+ */
+export function setInterceptorRequest(callback) {
+  axiosInstance.interceptors.request.use(callback)
+}
+
+/**
+ * @callback ResponseCallback
+ * @param {AxiosResponse} config
+ * @returns {AxiosResponse}
+ */
+
+/**
+ * @function setInterceptorResponse
+ * @param {ResponseCallback} callback
+ */
+export function setInterceptorResponse(callback) {
+  axiosInstance.interceptors.response.use(callback, onResponseError)
 }
