@@ -28,6 +28,8 @@
  * @typedef {import('./types/protocol').IProtFilter} IProtFilter
  * @typedef {import('./types/protocol').IGetProtResult} IGetProtResult
  * @typedef {import('./types/sending').IForWhoFilter} IForWhoFilter
+ * @typedef {import('./types/sending').ISendTextResult} ISendTextResult
+ *
  *
  * @exports IGetStatusResult
  * @exports IStatusData
@@ -40,6 +42,7 @@
  * @exports IProtFilter
  * @exports IGetProtResult
  * @exports IForWhoFilter
+ * @exports ISendTextResult
  *
  * @typedef {import('axios').CancelTokenSource} CancelTokenSource
  * @typedef {import('axios').CancelToken} CancelToken
@@ -47,8 +50,11 @@
  * @exports CancelToken
  *
  */
-import Api, { getCancelToken } from './Api'
+import axios from 'axios'
+import camelcaseKeys from 'camelcase-keys'
+import { onResponseError } from './api/onResponseError'
 import { prepareSendFilter, extractExtension, isValidURL, replaceAll } from './utils'
+import decamelcase from './decamelcase'
 
 const postType = {
   GETSTATUS: 'get_status',
@@ -69,6 +75,7 @@ const postType = {
 
 const baseURL = 'https://mbr.maxbot.com.br/api/v1.php'
 // const baseURL = 'http://localhost1:3003/test/hookhttp1'
+
 /**
  * @class
  * Class Maxbot methods:
@@ -94,8 +101,11 @@ class Maxbot {
    */
   constructor(params) {
     /** @type {MaxbotOptions} */
-    this.config = { token: '', timeout: 3000, baseURL }
+    this.config = { token: '', timeout: 3000, baseURL, debug: false }
     this.ready = false
+    this.loggingPrefix = 'MaxbotJs'
+    this.version = '0.1.0'
+    this.Api = axios.create()
 
     /** @type {ICancelSource[]} */
     this.cancelSources = []
@@ -107,7 +117,59 @@ class Maxbot {
       sound: ['mp3']
     }
 
-    this.setMe(params)
+    return this.setMe(params).configureAxios()
+  }
+
+  log(...args) {
+    if (this.config.debug) {
+      // eslint-disable-next-line no-console
+      console.log(this.loggingPrefix, ...args, '\n')
+    }
+  }
+
+  /**
+   * @private
+   * @method getCancelToken
+   */
+  getCancelToken() {
+    return axios.CancelToken
+  }
+
+  /**
+   * @private
+   * @method configureAxios
+   */
+  configureAxios() {
+    this.Api = axios.create({ baseURL: this.config.baseURL })
+    return this.configureRequests().configureResponses()
+  }
+
+  /**
+   * @private
+   * @method configureRequests
+   */
+  configureRequests() {
+    this.Api.interceptors.request.use(config => {
+      config.headers[
+        'user-agent'
+      ] = `maxbotjs/${this.version} (+https://github.com/leguass7/maxbotjs.git)`
+
+      config.data = decamelcase(config.data)
+      this.log('REQUEST:', config.data)
+      return config
+    })
+    return this
+  }
+
+  /**
+   * @private
+   * @method configureRequests
+   */
+  configureResponses() {
+    this.Api.interceptors.response.use(response => {
+      this.log('RESPONSE:', response.data || response)
+      return camelcaseKeys(response.data, { deep: true })
+    }, onResponseError)
     return this
   }
 
@@ -117,10 +179,7 @@ class Maxbot {
    * @param {string} msg
    */
   addError(msg) {
-    return {
-      status: 0,
-      msg
-    }
+    return { status: 0, msg }
   }
 
   /**
@@ -152,11 +211,15 @@ class Maxbot {
    * @param {Boolean} force force api request status
    * @returns {Promise<Boolean>}
    */
-  async isReady(force) {
+  async isReady(force = false) {
     if (!this.config.token) return false
     const check = async () => {
-      const result = await this.getStatus()
-      return !!parseInt(result.status, 10)
+      try {
+        const result = await this.getStatus()
+        return !!(result && result.status)
+      } catch (error) {
+        return false
+      }
     }
     if (force || !this.ready) this.ready = await check()
     return !!this.ready
@@ -301,7 +364,7 @@ class Maxbot {
    * @method sendText
    * @param {IForWhoFilter} forWho
    * @param {String} text
-   * @returns {Promise<ApiResult>}
+   * @returns {Promise<ISendTextResult>}
    */
   async sendText(forWho, text) {
     const filter = prepareSendFilter(forWho)
@@ -388,12 +451,12 @@ class Maxbot {
   async requestApi(type, payload = {}) {
     const self = this
 
-    const source = getCancelToken().source()
+    const source = this.getCancelToken().source()
     const cancelToken = source.token
     this.addCancelSource(source)
 
-    const result = await Api.post(
-      null,
+    const result = await this.Api.post(
+      null, // self.config.baseURL,
       {
         cmd: type,
         token: self.config.token,
@@ -401,12 +464,12 @@ class Maxbot {
       },
       {
         timeout: self.config.timeout,
-        baseURL: self.config.baseURL,
+        // baseURL: self.config.baseURL,
         cancelToken
       }
     )
 
-    if (result && result.status) this.ready = true
+    // if (result && typeof result === 'object' && !this.ready) this.ready = !!result.status
 
     this.removeCancelSource(cancelToken)
     return result
