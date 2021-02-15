@@ -5,8 +5,6 @@
  > Biblioteca (não oficial) **nodejs** de integração com [MAXBOT](https://maxbot.com.br)
  Por favor, visite o site oficial para entender como funciona.
 
- Current version: [https://www.npmjs.com/package/maxbotjs/v/0.1.4-alpha.0](https://www.npmjs.com/package/maxbotjs/v/0.1.4-alpha.0)
-
 ### O que é MAXBOT?
 É uma empresa que trabalha com uma ferramenta completa de atendimento automatizado via WhatsApp.
 
