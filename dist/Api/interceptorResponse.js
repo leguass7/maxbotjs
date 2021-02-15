@@ -1,1 +1,0 @@
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),require("camelcase-keys"),exports.onResponseError=async function onResponseError(e){const s=e&&e.response,r=s&&parseInt(s.status,10),o={status:0,msg:"Timeout",response:s&&s.data||!1};return s?(o.msg="httpError "+r,Promise.resolve(o)):Promise.resolve(o)};
