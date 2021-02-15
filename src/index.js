@@ -384,6 +384,7 @@ class Maxbot {
    * @param {IRequestPayload} payload
    * @returns {Promise<ApiResult>}
    */
+
   async requestApi(type, payload = {}) {
     const self = this
 
@@ -404,6 +405,8 @@ class Maxbot {
         cancelToken
       }
     )
+
+    if (result && result.status) this.ready = true
 
     this.removeCancelSource(cancelToken)
     return result
