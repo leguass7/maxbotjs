@@ -156,6 +156,7 @@ class Maxbot {
 
       config.data = decamelcase(config.data)
       this.log('REQUEST:', config.data)
+      // this.log('REQUEST JOSN:', JSON.stringify(config.data))
       return config
     })
     return this
