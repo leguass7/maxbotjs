@@ -29,6 +29,7 @@
  * @typedef {import('./types/protocol').IGetProtResult} IGetProtResult
  * @typedef {import('./types/sending').IForWhoFilter} IForWhoFilter
  * @typedef {import('./types/sending').ISendTextResult} ISendTextResult
+ * @typedef {import('./types/serviceSector').IServiceSector} IServiceSector
  *
  *
  * @exports IGetStatusResult
@@ -43,6 +44,7 @@
  * @exports IGetProtResult
  * @exports IForWhoFilter
  * @exports ISendTextResult
+ * @exports IServiceSector
  *
  * @typedef {import('axios').CancelTokenSource} CancelTokenSource
  * @typedef {import('axios').CancelToken} CancelToken
