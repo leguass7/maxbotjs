@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/leguass7/maxbotjs/compare/v0.1.5...v0.1.6) (2021-03-17)
+
+
+### Bug Fixes
+
+* exports types ([7e65709](https://github.com/leguass7/maxbotjs/commit/7e6570935c6bc06f7c4f870b0f62baf35e04f7a7))
+* exports types ([c7d360e](https://github.com/leguass7/maxbotjs/commit/c7d360ea0cd889a1e49fa818d829226594e37328))
+
 ### [0.1.5](https://github.com/leguass7/maxbotjs/compare/v0.1.4...v0.1.5) (2021-02-24)
 
 ### [0.1.4](https://github.com/leguass7/maxbotjs/compare/v0.1.4-alpha.0...v0.1.4) (2021-02-15)
