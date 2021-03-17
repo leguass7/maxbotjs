@@ -19,6 +19,7 @@ export type IProtFilter = import("./types/protocol").IProtFilter;
 export type IGetProtResult = import("./types/protocol").IGetProtResult;
 export type IForWhoFilter = import("./types/sending").IForWhoFilter;
 export type ISendTextResult = import("./types/sending").ISendTextResult;
+export type IServiceSector = import("./types/serviceSector").IServiceSector;
 export type CancelTokenSource = import("axios").CancelTokenSource;
 export type CancelToken = import("axios").CancelToken;
 /**
