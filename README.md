@@ -1,6 +1,6 @@
 <p align="center"><img src="/.github/maxbotjs.svg" height="120" width="90" alt="maxbotjs" /></p>
 
-![standard-image](https://img.shields.io/badge/code%20style-standard-brightgreen.svg) [![NPM](https://img.shields.io/npm/v/maxbotjs.svg)](https://www.npmjs.com/package/maxbotjs)
+![standard-image](https://img.shields.io/badge/code%20style-standard-brightgreen.svg) [![NPM](https://img.shields.io/npm/v/maxbotjs.svg)](https://www.npmjs.com/package/maxbotjs) [![Coverage Status](https://coveralls.io/repos/github/leguass7/maxbotjs/badge.svg?branch=master)](https://coveralls.io/github/leguass7/maxbotjs?branch=master) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 # maxbotjs
  > Biblioteca (não oficial) **nodejs** de integração com [MAXBOT](https://maxbot.com.br)
  Por favor, visite o site oficial para entender como funciona.
@@ -330,12 +330,71 @@ const result = await maxbot.getContact({
 
 #### putContact
 ```js
+const result = await maxbot.putContact({
+  segmentation: ['Negocia\u00e7\u00e3o', 'Proposta Enviada'],
+  tag: 'VIP',
+  name: 'Jose',
+  surname: 'Silva',
+  gender: 'M',
+  birth: '1974-06-15',
+  brPersonType: 'J',
+  brCpf: '11122233300',
+  brCnpj: '00111222000133',
+  company: 'Empresa Minha Ltda',
+  email: 'jose@email.com',
+  whatsapp: '5531911116666',
+  mobilePhone: '5531911116666',
+  phone: '553155551122',
+  country: 'BR',
+  state: 'MG',
+  city: 'Belo Horizonte',
+  profession: 'ESPORTE',
+  externalId: '667811',
+  avatarUrl: 'https://www.meusite.com.br/foto.jpg',
+  obs: 'Enviar proposta comercial na segunda'
+})
 
+// out
+{
+  status: 1,
+  msg: 'Success',
+  contact_id: 1234
+}
 ```
 
 #### setContact
 ```js
+const result = await maxbot.setContact({
+  forContactId: '1234',
+  segmentation: ['Negocia\u00e7\u00e3o', 'Proposta Enviada'],
+  tag: 'VIP',
+  name: 'Jose',
+  surname: 'Silva',
+  gender: 'M',
+  birth: '1974-06-15',
+  brPersonType: 'J',
+  brCpf: '11122233300',
+  brCnpj: '00111222000133',
+  company: 'Empresa Minha Ltda',
+  email: 'jose@email.com',
+  whatsapp: '5531911116666',
+  mobilePhone: '5531911116666',
+  phone: '553155551122',
+  country: 'BR',
+  state: 'MG',
+  city: 'Belo Horizonte',
+  profession: 'ESPORTE',
+  externalId: '667811',
+  avatarUrl: 'https://www.meusite.com.br/foto.jpg',
+  obs: 'Enviar proposta comercial na segunda'
+})
 
+// out
+
+{
+  status: 1,
+  msg: 'Success'
+}
 ```
 
 #### openFollowup
@@ -345,21 +404,54 @@ const result = await maxbot.getContact({
 
 #### sendText
 ```js
+const result = await maxbot.sendText({ whatsapp: '553191112222'}, 'Mensagem')
+
+// out
+{
+ status: 1,
+ msg: 'Success'
+}
 
 ```
 
 #### sendImage
 ```js
+// allowed images ['jpg', 'jpeg', 'png', 'gif']
+const urlImage = 'https://example.com/image.png'
+const result = await maxbot.sendImage({ whatsapp: '553191112222' }, urlImage)
+
+// out
+{
+ status: 1,
+ msg: 'Success'
+}
 
 ```
 
 #### sendFile
 ```js
+// allowed files ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pps']
+const urlFile = 'https://example.com/file.pdf'
+const result = await maxbot.sendFile({ whatsapp: '553191112222' }, urlFile)
 
+// out
+{
+ status: 1,
+ msg: 'Success'
+}
 ```
 
 #### sendSound
 ```js
+// allowed sounds ['mp3']
+const urlSound = 'https://example.com/sound.mp3'
+const result = await maxbot.sendFile({ whatsapp: '553191112222' }, urlSound)
+
+// out
+{
+ status: 1,
+ msg: 'Success'
+}
 
 ```
 

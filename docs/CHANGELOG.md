@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/leguass7/maxbotjs/compare/v0.1.6-0...v0.1.7) (2021-03-18)
+
+
+### Bug Fixes
+
+* added axios devDependencies ([f91b416](https://github.com/leguass7/maxbotjs/commit/f91b416fcbad0ec0e2ab1c74a7b89eb28e6d1e09))
+
 ### [0.1.6](https://github.com/leguass7/maxbotjs/compare/v0.1.5...v0.1.6) (2021-03-17)
 
 
