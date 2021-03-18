@@ -1,8 +1,4 @@
-import dotenv from 'dotenv'
-import Maxbot from '../index'
-import { extractExtension, isValidURL, replaceAll } from '../utils'
-
-dotenv.config()
+import Maxbot from '../src'
 
 const env = {
   token: process.env.MAXBOT_TOKEN,
@@ -16,31 +12,6 @@ const maxbot = new Maxbot({ token: env.token })
 let contactTest = {}
 
 describe('Test Class', () => {
-  // ...
-  describe('Test lib utils', () => {
-    test('Should return ext of a url', () => {
-      const expected = 'pdf'
-      expect(extractExtension('design.pdf')).toEqual(expected)
-      expect(extractExtension('http://example.com/include/marquee/design.pdf')).toEqual(expected)
-      expect(extractExtension('/marquee/design.pdf?width=792&height=294')).toEqual(expected)
-      expect(extractExtension('http://example.com/some/page.html#fragment1')).toEqual('html')
-      expect(extractExtension('http://example.com/dynamic.php?foo=bar#fragment1')).toEqual('php')
-      expect(extractExtension('http://example.com/dynamic/')).toEqual('')
-    })
-
-    test('Should test valid url', () => {
-      expect(isValidURL('design.pdf')).toEqual(false)
-      expect(isValidURL('http://example.com/include/marquee/design.pdf')).toEqual(true)
-    })
-
-    test('Should test replaceAll', () => {
-      expect(replaceAll('primeiro segundo', ' ')).toEqual('primeiro,segundo')
-      expect(replaceAll('primeiro segundo', ' ', '')).toEqual('primeirosegundo')
-      expect(replaceAll('primeiro segundo', [' ', 'e'], '')).toEqual('primirosgundo')
-      expect(replaceAll('')).toEqual('')
-    })
-  })
-
   describe('Should configure the class', () => {
     test('Should a class', () => {
       const mb = new Maxbot()
@@ -48,12 +19,12 @@ describe('Test Class', () => {
     })
 
     test('Should return http errors', async () => {
-      const mb = new Maxbot({ baseURL: 'http://invalidurl', timeout: 500 })
-      expect(await mb.getStatus()).toEqual(expect.objectContaining({ status: 0, msg: 'Timeout' }))
-      mb.setMe('baseURL', 'http://google.com.br/testinvalidurl')
-      expect(await mb.getStatus()).toEqual(
-        expect.objectContaining({ status: 0, msg: 'httpError 404' })
-      )
+      const mb = new Maxbot({ baseURL: 'http://invalidurl', timeout: 2000 })
+      let response = await mb.getStatus()
+      expect(response).toEqual(expect.objectContaining({ status: 0, msg: 'Timeout' }))
+      mb.setMe('baseURL', 'https://avatarsolucoesdigitais.com.br/testinvalidurl/test.html')
+      response = await mb.getStatus()
+      expect(response).toEqual(expect.objectContaining({ status: 0 }))
     })
 
     test('Should test checks extension', () => {

@@ -8,15 +8,6 @@
  * @typedef {import('./types/types').IRequestPayload} IRequestPayload
  * @typedef {import('./types/types').ICancelSource} ICancelSource
  *
- * @exports MaxbotOptions
- * @exports ApiResult
- * @exports ITemplateResult
- * @exports IServiceSectorResult
- * @exports IAttendantResult
- * @exports PostType
- * @exports IRequestPayload
- * @exports ICancelSource
- *
  * @typedef {import('./types/status').IGetStatusResult} IGetStatusResult
  * @typedef {import('./types/status').IStatusData} IStatusData
  * @typedef {import('./types/segmentation').ISegmentationData} ISegmentationData
@@ -24,6 +15,7 @@
  * @typedef {import('./types/contact').IContactFilter} IContactFilter
  * @typedef {import('./types/contact').IContactData} IContactData
  * @typedef {import('./types/contact').ISetContactData} ISetContactData
+ * @typedef {import('./types/contact').IPutContactData} IPutContactData
  * @typedef {import('./types/contact').IGetContactResult} IGetContactResult
  * @typedef {import('./types/protocol').IProtFilter} IProtFilter
  * @typedef {import('./types/protocol').IGetProtResult} IGetProtResult
@@ -31,32 +23,17 @@
  * @typedef {import('./types/sending').ISendTextResult} ISendTextResult
  * @typedef {import('./types/serviceSector').IServiceSector} IServiceSector
  *
- *
- * @exports IGetStatusResult
- * @exports IStatusData
- * @exports ISegmentationData
- * @exports IGetSegmentationResult
- * @exports IContactFilter
- * @exports IContactData
- * @exports ISetContactData
- * @exports IGetContactResult
- * @exports IProtFilter
- * @exports IGetProtResult
- * @exports IForWhoFilter
- * @exports ISendTextResult
- * @exports IServiceSector
- *
  * @typedef {import('axios').CancelTokenSource} CancelTokenSource
  * @typedef {import('axios').CancelToken} CancelToken
- * @exports CancelTokenSource
- * @exports CancelToken
  *
  */
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
 import { onResponseError } from './api/onResponseError'
-import { prepareSendFilter, extractExtension, isValidURL, replaceAll } from './utils'
-import decamelcase from './decamelcase'
+import { prepareSendFilter, normalizeContactSegmentation } from '../helpers/utils_temp'
+import { extractExtension, replaceAll, isValidURL } from '../helpers'
+import decamelcase from '../helpers/decamelcase'
+import { version } from '../../package.json'
 
 const postType = {
   GETSTATUS: 'get_status',
@@ -106,7 +83,7 @@ class Maxbot {
     this.config = { token: '', timeout: 3000, baseURL, debug: false }
     this.ready = false
     this.loggingPrefix = 'MaxbotJs'
-    this.version = '0.1.0'
+    this.version = version
     this.Api = axios.create()
 
     /** @type {ICancelSource[]} */
@@ -332,10 +309,14 @@ class Maxbot {
   /**
    * Criar um novo contato no Maxbot
    * @method putContact
-   * @param {IContactData} contactData
+   * @param {IPutContactData} contactData
    * @returns {Promise<ApiResult>}
    */
   async putContact(contactData) {
+    if (contactData.segmentation) {
+      contactData.segmentation = normalizeContactSegmentation(contactData.segmentation)
+    }
+
     const res = await this.requestApi(postType.PUTCONTACT, contactData)
     return res
   }
@@ -347,6 +328,9 @@ class Maxbot {
    * @returns {Promise<ApiResult>}
    */
   async setContact(contactData) {
+    if (contactData.segmentation) {
+      contactData.segmentation = normalizeContactSegmentation(contactData.segmentation)
+    }
     const res = await this.requestApi(postType.SETCONTACT, contactData)
     return res
   }

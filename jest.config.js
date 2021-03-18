@@ -15,11 +15,13 @@ module.exports = {
     'dotenv/config'
     // '<rootDir>/jest.setup.js'
   ],
-
+  moduleNameMapper: {
+    '~/(.*)': '<rootDir>/src/$1'
+  },
   testEnvironment: 'node',
   testMatch: [
-    // '**/tests/**/*.test.js?(x)'
-    '**/?(*.)+(spec|test).[tj]s?(x)'
+    '<rootDir>/__tests__/**/*.(test).{js,jsx,ts,tsx}',
+    '<rootDir>/__tests__/**/?(*.)(spec|test).{js,jsx,ts,tsx}'
   ],
   testPathIgnorePatterns: ['<rootDir>/dist/', '<rootDir>/node_modules/'],
 

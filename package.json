@@ -2,8 +2,9 @@
   "name": "maxbotjs",
   "version": "0.1.6",
   "description": "Library to connect MAXBOT",
-  "main": "./dist/index.js",
-  "types": "./dist",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "types": "dist",
   "author": "Leandro Sbrissa <leandro.sbrissa@hotmail.com>",
   "license": "MIT",
   "files": [
@@ -17,12 +18,15 @@
     "build": "rollup -c",
     "lint": "eslint src --ext js,ts",
     "test": "cross-env NODE_ENV=test jest --coverage --detectOpenHandles --forceExit",
-    "release": "standard-version --no-verify --release-as patch"
+    "release": "standard-version --no-verify --release-as patch",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
+  "homepage": "https://github.com/leguass7/maxbotjs",
   "keywords": [
     "maxbot",
     "nodejs",
-    "api"
+    "api",
+    "whatsapp"
   ],
   "bugs": {
     "url": "https://github.com/leguass7/maxbotjs/issues"
@@ -38,25 +42,28 @@
     "node": ">=10"
   },
   "peerDependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.0"
+  },
+  "dependencies": {
     "camelcase-keys": "^6.2.2",
     "decamelize": "^4.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.12.1",
+    "@babel/preset-flow": "^7.12.13",
+    "@babel/preset-typescript": "^7.13.0",
+    "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
+    "@rollup/plugin-typescript": "^8.2.0",
     "@rollup/pluginutils": "^4.1.0",
-    "@types/dotenv": "^8.2.0",
     "@types/jest": "^26.0.15",
     "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.7.0",
-    "axios": "^0.21.0",
     "babel-jest": "^26.6.3",
-    "camelcase-keys": "^6.2.2",
+    "coveralls": "^3.1.0",
     "cross-env": "^7.0.2",
-    "decamelize": "^4.0.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
@@ -68,16 +75,12 @@
     "eslint-plugin-standard": "^4.1.0",
     "jest": "^26.6.3",
     "prettier": "^2.1.2",
-    "rollup": "^2.33.1",
+    "rollup": "^2.41.5",
     "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.29.0",
-    "standard-version": "^9.0.0",
-    "ts-jest": "^26.4.4",
-    "typescript": "^4.0.5"
-  },
-  "dependencies": {
-    "axios": "^0.21.0",
-    "camelcase-keys": "^6.2.2",
-    "decamelize": "^4.0.0"
+    "rollup-plugin-typescript2": "^0.30.0",
+    "standard-version": "^9.1.1",
+    "ts-jest": "^26.5.4",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.3"
   }
 }
